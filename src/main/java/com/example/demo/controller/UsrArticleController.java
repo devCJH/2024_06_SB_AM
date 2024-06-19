@@ -36,6 +36,24 @@ public class UsrArticleController {
 		this.articles.add(article);
 		return article;
 	}
+	
+	private Article getArticleById(int id) {
+		for (Article article : this.articles) {			
+			if (article.getId() == id) {
+				return article;
+			}
+		}
+		return null;
+	}
+
+	private void modifyArticle(Article foundArticle, String title, String body) {
+		foundArticle.setTitle(title);
+		foundArticle.setBody(body);
+	}
+	
+	private void deleteArticle(Article foundArticle) {
+		this.articles.remove(foundArticle);
+	}
 
 	@GetMapping("/usr/article/doWrite")
 	@ResponseBody
@@ -49,4 +67,33 @@ public class UsrArticleController {
 		return this.articles;
 	}
 	
+	@GetMapping("/usr/article/doModify")
+	@ResponseBody
+	public String doModify(int id, String title, String body) {
+		
+		Article foundArticle = getArticleById(id);
+		
+		if (foundArticle == null) {
+			return id + "번 게시물은 존재하지 않습니다";
+		}
+		
+		modifyArticle(foundArticle, title, body);
+		
+		return id + "번 게시물을 수정했습니다";
+	}
+	
+	@GetMapping("/usr/article/doDelete")
+	@ResponseBody
+	public String doDelete(int id) {
+		
+		Article foundArticle = getArticleById(id);
+		
+		if (foundArticle == null) {
+			return id + "번 게시물은 존재하지 않습니다";
+		}
+		
+		deleteArticle(foundArticle);
+		
+		return id + "번 게시물을 삭제했습니다";
+	}
 }
