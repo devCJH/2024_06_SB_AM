@@ -67,6 +67,19 @@ public class UsrArticleController {
 		return this.articles;
 	}
 	
+	@GetMapping("/usr/article/showDetail")
+	@ResponseBody
+	public Object showDetail(int id) {
+		
+		Article foundArticle = getArticleById(id);
+		
+		if (foundArticle == null) {
+			return id + "번 게시물은 존재하지 않습니다";
+		}
+		
+		return foundArticle;
+	}
+	
 	@GetMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(int id, String title, String body) {
