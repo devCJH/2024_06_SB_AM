@@ -17,17 +17,29 @@ public interface ArticleDao {
 			INSERT INTO article
 				SET regDate = NOW()
 					, updateDate = NOW()
+					, memberId = #{memberId}
 					, title = #{title}
 					, `body` = #{body}
 			""")
-	public void writeArticle(String title, String body);
+	public void writeArticle(int memberId, String title, String body);
 
 	@Select("""
-			SELECT *
-				FROM article
-				ORDER BY id DESC
+			SELECT A.*, M.nickname `writerName`
+				FROM article A
+				INNER JOIN `member` M
+				ON A.memberId = M.id
+				ORDER BY A.id DESC
 			""")
 	public List<Article> getArticles();
+	
+	@Select("""
+			SELECT A.*, M.nickname `writerName`
+				FROM article A
+				INNER JOIN `member` M
+				ON A.memberId = M.id
+				WHERE A.id = #{id}
+			""")
+	public Article forPrintArticle(int id);
 	
 	@Select("""
 			SELECT *
@@ -59,4 +71,5 @@ public interface ArticleDao {
 
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
+
 }

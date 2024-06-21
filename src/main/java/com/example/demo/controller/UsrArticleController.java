@@ -11,6 +11,8 @@ import com.example.demo.util.Util;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.ResultData;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UsrArticleController {
 	
@@ -22,7 +24,11 @@ public class UsrArticleController {
 	
 	@GetMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData<Article> doWrite(String title, String body) {
+	public ResultData<Article> doWrite(HttpSession session, String title, String body) {
+		
+		if (session.getAttribute("loginedMemberId") == null) {
+			return ResultData.from("F-L", "로그인 후 이용해주세요");
+		}
 		
 		if (Util.isEmpty(title)) {
 			return ResultData.from("F-1", "제목을 입력해주세요");
@@ -31,7 +37,7 @@ public class UsrArticleController {
 			return ResultData.from("F-2", "내용을 입력해주세요");
 		}
 		
-		articleService.writeArticle(title, body);
+		articleService.writeArticle((int) session.getAttribute("loginedMemberId"), title, body);
 		
 		int id = articleService.getLastInsertId();
 		
@@ -54,7 +60,7 @@ public class UsrArticleController {
 	@ResponseBody
 	public ResultData<Article> showDetail(int id) {
 		
-		Article foundArticle = articleService.getArticleById(id);
+		Article foundArticle = articleService.forPrintArticle(id);
 		
 		if (foundArticle == null) {
 			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
@@ -65,12 +71,16 @@ public class UsrArticleController {
 	
 	@GetMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(int id, String title, String body) {
+	public ResultData doModify(HttpSession session, int id, String title, String body) {
 		
 		Article foundArticle = articleService.getArticleById(id);
 		
 		if (foundArticle == null) {
 			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
+		}
+		
+		if (foundArticle.getMemberId() != (int) session.getAttribute("loginedMemberId")) {
+			return ResultData.from("F-A", "해당 게시물에 대한 권한이 없습니다");
 		}
 		
 		articleService.modifyArticle(id, title, body);
@@ -80,12 +90,16 @@ public class UsrArticleController {
 	
 	@GetMapping("/usr/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(int id) {
+	public ResultData doDelete(HttpSession session, int id) {
 		
 		Article foundArticle = articleService.getArticleById(id);
 		
 		if (foundArticle == null) {
 			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
+		}
+		
+		if (foundArticle.getMemberId() != (int) session.getAttribute("loginedMemberId")) {
+			return ResultData.from("F-A", "해당 게시물에 대한 권한이 없습니다");
 		}
 		
 		articleService.deleteArticle(id);
