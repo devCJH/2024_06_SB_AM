@@ -5,8 +5,8 @@
 <c:set var="pageTitle" value="ARTICLE LIST" />
 
 <%@ include file="../../common/head.jsp" %>
-	<section>
-		<div>
+	<section class="mt-8 text-lg">
+		<div class="container mx-auto px-3">
 			<div class="table-box-type">
 				<table>
 					<thead>
@@ -21,8 +21,8 @@
 						<c:forEach var="article" items="${articles }">
 							<tr>
 								<td>${article.id }</td>
-								<td>${article.title }</td>
-								<td>${article.memberId }</td>
+								<td class="hover:underline"><a href="detail?id=${article.id }">${article.title }</a></td>
+								<td>${article.writerName }</td>
 								<td>${article.updateDate }</td>
 							</tr>
 						</c:forEach>

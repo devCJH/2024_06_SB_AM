@@ -15,17 +15,17 @@
 <link rel="stylesheet" href="/resource/common.css" />
 </head>
 <body>
-	<div>
-		<div><a href="/"><span>로고</span></a></div>
-		
-		<ul>
-			<li><a href="/"><span>HOME</span></a></li>
-			<li><a href="/usr/article/list"><span>LIST</span></a></li>
+	<div class="h-20 flex container mx-auto text-3xl">
+		<div><a class="h-full px-3 flex items-center" href="/"><span>로고</span></a></div>
+		<div class="grow"></div>
+		<ul class="flex">
+			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/"><span>HOME</span></a></li>
+			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/article/list"><span>LIST</span></a></li>
 		</ul>
 	</div>
 	
-	<section>
-		<div>
+	<section class="my-3 text-2xl">
+		<div class="container mx-auto px-3">
 			<div>${pageTitle }&nbsp;PAGE</div>
 		</div>
 	</section>
