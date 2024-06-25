@@ -11,7 +11,9 @@ import com.example.demo.service.ArticleService;
 import com.example.demo.util.Util;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.ResultData;
+import com.example.demo.vo.Rq;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -56,18 +58,14 @@ public class UsrArticleController {
 	}
 	
 	@GetMapping("/usr/article/detail")
-	public String showDetail(HttpSession session, Model model, int id) {
+	public String showDetail(HttpServletRequest req, Model model, int id) {
 		
-		int loginedMemberId = 0;
-		
-		if (session.getAttribute("loginedMemberId") != null) {
-			loginedMemberId = (int) session.getAttribute("loginedMemberId");
-		}
+		Rq rq = (Rq) req.getAttribute("rq");
 		
 		Article article = articleService.forPrintArticle(id);
 		
 		model.addAttribute("article", article);
-		model.addAttribute("loginedMemberId", loginedMemberId);
+		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		
 		return "usr/article/detail";
 	}
