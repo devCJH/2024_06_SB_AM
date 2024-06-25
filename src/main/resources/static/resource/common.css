@@ -11,6 +11,17 @@ html > body {
 	text-underline-position: under;
 }
 
+.btns > button, .btns > a {
+	border: 1px solid black;
+	border-radius: 7px;
+	padding: 5px;
+}
+
+.btns > button:hover, .btns > a:hover {
+	background-color: black;
+	color: white;
+}
+
 .table-box-type > table {
 	width: 100%;
 }
