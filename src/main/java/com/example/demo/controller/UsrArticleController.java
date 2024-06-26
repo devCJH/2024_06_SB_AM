@@ -5,15 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
 import com.example.demo.util.Util;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.ResultData;
-import com.example.demo.vo.Rq;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -48,7 +47,7 @@ public class UsrArticleController {
 	}
 	
 	@GetMapping("/usr/article/list")
-	public String showList(Model model) {
+	public String list(Model model) {
 		
 		List<Article> articles = articleService.getArticles();
 		
@@ -58,35 +57,32 @@ public class UsrArticleController {
 	}
 	
 	@GetMapping("/usr/article/detail")
-	public String showDetail(HttpServletRequest req, Model model, int id) {
-		
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String detail(Model model, int id) {
 		
 		Article article = articleService.forPrintArticle(id);
 		
 		model.addAttribute("article", article);
-		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		
 		return "usr/article/detail";
 	}
 	
-	@GetMapping("/usr/article/doModify")
+	@GetMapping("/usr/article/modify")
+	public String modify(Model model, int id) {
+		
+		Article article = articleService.forPrintArticle(id);
+		
+		model.addAttribute("article", article);
+		
+		return "usr/article/modify";
+	}
+	
+	@PostMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(HttpSession session, int id, String title, String body) {
-		
-		Article foundArticle = articleService.getArticleById(id);
-		
-		if (foundArticle == null) {
-			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
-		}
-		
-		if (foundArticle.getMemberId() != (int) session.getAttribute("loginedMemberId")) {
-			return ResultData.from("F-A", "해당 게시물에 대한 권한이 없습니다");
-		}
+	public String doModify(int id, String title, String body) {
 		
 		articleService.modifyArticle(id, title, body);
 		
-		return ResultData.from("S-1", String.format("%d번 게시물을 수정했습니다", id));
+		return Util.jsReplace(String.format("%d번 게시물을 수정했습니다", id), String.format("detail?id=%d", id));
 	}
 	
 	@GetMapping("/usr/article/doDelete")

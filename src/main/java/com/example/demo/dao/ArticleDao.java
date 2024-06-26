@@ -52,12 +52,8 @@ public interface ArticleDao {
 			<script>
 			UPDATE article
 				SET updateDate = NOW()
-					<if test="title != null and title != ''">
-						, title = #{title}
-					</if>
-					<if test="body != null and body != ''">
-						, `body` = #{body}
-					</if>
+					, title = #{title}
+					, `body` = #{body}
 				WHERE id = #{id}
 			</script>
 			""")
