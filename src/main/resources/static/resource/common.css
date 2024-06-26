@@ -11,23 +11,10 @@ html > body {
 	text-underline-position: under;
 }
 
-.btns > button, .btns > a {
-	border: 1px solid black;
-	border-radius: 7px;
-	padding: 5px;
-}
-
-.btns > button:hover, .btns > a:hover {
-	background-color: black;
-	color: white;
-}
-
 .table-box-type > table {
 	width: 100%;
 }
 
-.table-box-type > table th, .table-box-type > table td {
-	border: 1px solid black;
-	padding: 10px;
-	text-align: center;
+.login-table > table {
+	width: 50%;
 }

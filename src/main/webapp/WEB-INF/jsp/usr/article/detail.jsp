@@ -8,7 +8,7 @@
 	<section class="mt-8 text-lg">
 		<div class="container mx-auto px-3">
 			<div class="table-box-type">
-				<table>
+				<table class="table table-lg">
 					<tr>
 						<th>번호</th>
 						<td>${article.id }</td>
@@ -32,12 +32,11 @@
 				</table>
 			</div>
 			
-			<div class="btns mt-3 text-sm">
-				<button onclick="history.back();">뒤로가기</button>
-				
+			<div class="mt-3 text-sm">
+				<button class="btn btn-active btn-sm" onclick="history.back();">뒤로가기</button>
 				<c:if test="${loginedMemberId == article.memberId }">
-					<a href="modify?id=${article.id }">수정</a>
-					<a href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
+					<a class="btn btn-active btn-sm" href="modify?id=${article.id }">수정</a>
+					<a class="btn btn-active btn-sm" href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
 				</c:if>
 			</div>
 		</div>
