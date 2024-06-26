@@ -27,4 +27,23 @@ public class Util {
 					</script>
 				""", msg, uri);
 	}
+
+	public static String jsHistoryBack(String msg) {
+		
+		if (msg == null) {
+			msg = "";
+		}
+		
+		return String.format("""
+				<script>
+					const msg = '%s'.trim();
+					
+					if (msg.length > 0) {
+						alert(msg);
+					}
+					
+					history.back();
+				</script>
+			""", msg);
+	}
 }
