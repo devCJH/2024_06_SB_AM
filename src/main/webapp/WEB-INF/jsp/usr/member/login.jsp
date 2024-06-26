@@ -5,9 +5,31 @@
 <c:set var="pageTitle" value="MEMBER LOGIN" />
 
 <%@ include file="../../common/head.jsp" %>
+
+	<script>
+		const loginForm_onSubmit = function(form) {
+			form.loginId.value = form.loginId.value.trim();
+			form.loginPw.value = form.loginPw.value.trim();
+			
+			if (form.loginId.value.length == 0) {
+				alert('아이디를 입력해주세요');
+				form.loginId.focus();
+				return;
+			}
+			
+			if (form.loginPw.value.length == 0) {
+				alert('비밀번호를 입력해주세요');
+				form.loginPw.focus();
+				return;
+			}
+			
+			form.submit();
+		}
+	</script>
+
 	<section class="mt-8 text-lg">
 		<div class="container mx-auto px-3">
-			<form action="doLogin" method="post">
+			<form action="doLogin" method="post" onsubmit="loginForm_onSubmit(this); return false;">
 				<div class="table-box-type">
 					<table>
 						<tr>
