@@ -28,9 +28,10 @@ public interface ArticleDao {
 				FROM article A
 				INNER JOIN `member` M
 				ON A.memberId = M.id
+				WHERE A.boardId = #{boardId}
 				ORDER BY A.id DESC
 			""")
-	public List<Article> getArticles();
+	public List<Article> getArticles(int boardId);
 	
 	@Select("""
 			SELECT A.*, M.nickname `writerName`
@@ -67,5 +68,12 @@ public interface ArticleDao {
 
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
+
+	@Select("""
+			SELECT `name`
+				FROM board
+				WHERE id = #{boardId}
+			""")
+	public String getBoardNameById(int boardId);
 
 }

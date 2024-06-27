@@ -43,10 +43,13 @@ public class UsrArticleController {
 	}
 	
 	@GetMapping("/usr/article/list")
-	public String list(Model model) {
+	public String list(Model model, int boardId) {
 		
-		List<Article> articles = articleService.getArticles();
+		String boardName = articleService.getBoardNameById(boardId);
 		
+		List<Article> articles = articleService.getArticles(boardId);
+		
+		model.addAttribute("boardName", boardName);
 		model.addAttribute("articles", articles);
 		
 		return "usr/article/list";

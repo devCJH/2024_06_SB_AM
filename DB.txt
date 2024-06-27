@@ -7,6 +7,7 @@ CREATE TABLE article(
     , regDate DATETIME NOT NULL
     , updateDate DATETIME NOT NULL
     , memberId INT UNSIGNED NOT NULL
+    , boardId INT UNSIGNED NOT NULL
     , title VARCHAR(100) NOT NULL
     , `body` TEXT NOT NULL
 );
@@ -26,10 +27,16 @@ CREATE TABLE `member`(
     , delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
+CREATE TABLE board(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
+    , `name` VARCHAR(20) NOT NULL COMMENT '게시판 이름'
+);
+
 INSERT INTO article
     SET regDate = NOW()
         , updateDate = NOW()
-        , memberId = 2
+        , memberId = 1
+        , boardId = 1
         , title = CONCAT('제목_', RAND())
         , `body` = CONCAT('내용_', RAND());
         
@@ -54,8 +61,15 @@ INSERT INTO `member`
         , cellphoneNum = '010-1111-1111'
         , email = 'user1@user1.com';
 
+INSERT INTO board
+    SET `name` = '공지사항';
+INSERT INTO board
+    SET `name` = '자유';
+
 SELECT * FROM article;
 SELECT * FROM `member`;
+SELECT * FROM board;
 
 TRUNCATE article;
 TRUNCATE `member`;
+TRUNCATE board;
