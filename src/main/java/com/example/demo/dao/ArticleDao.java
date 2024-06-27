@@ -18,10 +18,11 @@ public interface ArticleDao {
 				SET regDate = NOW()
 					, updateDate = NOW()
 					, memberId = #{memberId}
+					, boardId = #{boardId}
 					, title = #{title}
 					, `body` = #{body}
 			""")
-	public void writeArticle(int memberId, String title, String body);
+	public void writeArticle(int memberId, int boardId, String title, String body);
 
 	@Select("""
 			SELECT A.*, M.nickname `writerName`
