@@ -5,7 +5,7 @@
 <c:set var="pageTitle" value="${boardName } 게시판" />
 
 <%@ include file="../../common/head.jsp" %>
-	<section class="mt-8 text-lg">
+	<section class="my-8 text-lg">
 		<div class="container mx-auto px-3">
 			<div class="mb-2 ml-3 text-sm">
 				<div><span>총 : ${articlesCnt }개</span></div>
@@ -38,6 +38,26 @@
 					<a class="btn btn-active btn-sm" href="write">글쓰기</a>
 				</div>
 			</c:if>
+			
+			<div class="mt-3 flex justify-center">
+				<div class="join">
+				
+					<c:if test="${from != 1 }">
+						<a class="join-item btn btn-sm" href="?boardId=${param.boardId }&cPage=1"><i class="fa-solid fa-angles-left"></i></a>
+						<a class="join-item btn btn-sm" href="?boardId=${param.boardId }&cPage=${from - 1 }"><i class="fa-solid fa-caret-left"></i></a>
+					</c:if>
+				
+					<c:forEach begin="${from }" end="${end }" var="i">
+						<a class="join-item btn btn-sm ${cPage == i ? 'btn-active' : '' }" href="?boardId=${param.boardId }&cPage=${i }">${i }</a>
+					</c:forEach>
+					
+					<c:if test="${end != totalPageCnt }">
+						<a class="join-item btn btn-sm" href="?boardId=${param.boardId }&cPage=${end + 1 }"><i class="fa-solid fa-caret-right"></i></a>
+						<a class="join-item btn btn-sm" href="?boardId=${param.boardId }&cPage=${totalPageCnt }"><i class="fa-solid fa-angles-right"></i></a>
+					</c:if>
+				</div>
+			</div>
+			
 		</div>
 	</section>
 <%@ include file="../../common/foot.jsp" %>

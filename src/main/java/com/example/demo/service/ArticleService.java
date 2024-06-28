@@ -20,8 +20,8 @@ public class ArticleService {
 		this.articleDao.writeArticle(memberId, boardId, title, body);
 	}
 	
-	public List<Article> getArticles(int boardId) {
-		return this.articleDao.getArticles(boardId);
+	public List<Article> getArticles(int boardId, int limitFrom, int itemsInAPage) {
+		return this.articleDao.getArticles(boardId, limitFrom, itemsInAPage);
 	}
 	
 	public Article forPrintArticle(int id) {
