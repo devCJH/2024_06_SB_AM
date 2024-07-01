@@ -34,6 +34,14 @@ CREATE TABLE board(
     , `name` VARCHAR(20) NOT NULL COMMENT '게시판 이름'
 );
 
+CREATE TABLE likePoint(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
+    , memberId INT UNSIGNED NOT NULL
+    , relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드'
+    , relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호'
+    , `point` INT NOT NULL DEFAULT 1
+);
+
 INSERT INTO article
     SET regDate = NOW()
         , updateDate = NOW()
@@ -78,13 +86,39 @@ INSERT INTO board
 INSERT INTO board
     SET `name` = '자유';
 
+# 2번 회원이 2번 게시물에 좋아요
+INSERT INTO likePoint
+    SET memberId = 2
+        , relTypeCode = 'article'
+        , relId = 2;
+
+# 2번 회원이 3번 게시물에 좋아요
+INSERT INTO likePoint
+    SET memberId = 2
+        , relTypeCode = 'article'
+        , relId = 3;
+
+# 3번 회원이 1번 게시물에 좋아요
+INSERT INTO likePoint
+    SET memberId = 3
+        , relTypeCode = 'article'
+        , relId = 1;
+
+# 3번 회원이 3번 게시물에 좋아요
+INSERT INTO likePoint
+    SET memberId = 3
+        , relTypeCode = 'article'
+        , relId = 3;
+
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
+SELECT * FROM likePoint;
 
 TRUNCATE article;
 TRUNCATE `member`;
 TRUNCATE board;
+TRUNCATE likePoint;
 
 INSERT INTO article
 (
