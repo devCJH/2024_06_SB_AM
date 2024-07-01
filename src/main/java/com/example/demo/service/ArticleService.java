@@ -51,4 +51,8 @@ public class ArticleService {
 	public int getArticlesCnt(int boardId, String searchKeywordType, String searchKeyword) {
 		return this.articleDao.getArticlesCnt(boardId, searchKeywordType, searchKeyword);
 	}
+
+	public void increaseView(int id) {
+		this.articleDao.increaseView(id);
+	}
 }

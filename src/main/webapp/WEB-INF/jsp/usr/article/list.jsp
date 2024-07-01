@@ -42,21 +42,30 @@
 			
 			<div class="table-box-type">
 				<table class="table table-lg">
+					<colgroup>
+						<col width="60" />
+						<col width="" />
+						<col width="80" />
+						<col width="200" />
+						<col width="40" />
+					</colgroup>
 					<thead>
 						<tr>
 							<th>번호</th>
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
+							<th>조회수</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="article" items="${articles }">
 							<tr class="hover">
-								<td>${article.id }</td>
+									<td>${article.id }</td>
 								<td class="hover:underline"><a href="detail?id=${article.id }">${article.title }</a></td>
 								<td>${article.writerName }</td>
 								<td>${article.updateDate.substring(2, 16) }</td>
+								<td>${article.views }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
