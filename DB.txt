@@ -42,6 +42,16 @@ CREATE TABLE likePoint(
     , `point` INT NOT NULL DEFAULT 1
 );
 
+CREATE TABLE reply(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
+    , regDate DATETIME NOT NULL
+    , updateDate DATETIME NOT NULL
+    , memberId INT UNSIGNED NOT NULL
+    , relTypeCode VARCHAR(20) NOT NULL
+    , relId INT UNSIGNED NOT NULL
+    , `body` TEXT NOT NULL
+);
+
 INSERT INTO article
     SET regDate = NOW()
         , updateDate = NOW()
@@ -110,15 +120,53 @@ INSERT INTO likePoint
         , relTypeCode = 'article'
         , relId = 3;
 
+# 2번 회원이 1번 글에 댓글
+INSERT INTO reply
+    SET regDate = NOW()
+        , updateDate = NOW()
+        , memberId = 2
+        , relTypeCode = 'article'
+        , relId = 1
+        , `body` = '댓글1';
+
+# 3번 회원이 1번 글에 댓글
+INSERT INTO reply
+    SET regDate = NOW()
+        , updateDate = NOW()
+        , memberId = 3
+        , relTypeCode = 'article'
+        , relId = 1
+        , `body` = '댓글2';
+
+# 2번 회원이 3번 글에 댓글
+INSERT INTO reply
+    SET regDate = NOW()
+        , updateDate = NOW()
+        , memberId = 2
+        , relTypeCode = 'article'
+        , relId = 3
+        , `body` = '댓글3';
+
+# 3번 회원이 2번 글에 댓글
+INSERT INTO reply
+    SET regDate = NOW()
+        , updateDate = NOW()
+        , memberId = 3
+        , relTypeCode = 'article'
+        , relId = 2
+        , `body` = '댓글4';
+
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM likePoint;
+SELECT * FROM reply;
 
 TRUNCATE article;
 TRUNCATE `member`;
 TRUNCATE board;
 TRUNCATE likePoint;
+TRUNCATE reply;
 
 INSERT INTO article
 (
