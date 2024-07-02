@@ -26,10 +26,15 @@ public interface ArticleDao {
 
 	@Select("""
 			<script>
-			SELECT A.*, M.nickname `writerName`
+			SELECT A.*
+				   , M.nickname `writerName`
+				   , IFNULL(SUM(L.`point`), 0) `likePoint`
 				FROM article A
 				INNER JOIN `member` M
 				ON A.memberId = M.id
+				LEFT JOIN likePoint L
+				ON A.id = L.relId
+				AND L.relTypeCode = 'article'
 				WHERE A.boardId = #{boardId}
 				<if test="searchKeyword != ''">
 					<choose>
@@ -47,6 +52,7 @@ public interface ArticleDao {
 						</otherwise>
 					</choose>
 				</if>
+				GROUP BY A.id
 				ORDER BY A.id DESC
 				LIMIT #{limitFrom}, #{itemsInAPage}
 			</script>
@@ -54,11 +60,17 @@ public interface ArticleDao {
 	public List<Article> getArticles(int boardId, String searchKeywordType, String searchKeyword, int limitFrom, int itemsInAPage);
 	
 	@Select("""
-			SELECT A.*, M.nickname `writerName`
+			SELECT A.*
+				   , M.nickname `writerName`
+				   , IFNULL(SUM(L.`point`), 0) `likePoint`
 				FROM article A
 				INNER JOIN `member` M
 				ON A.memberId = M.id
+				LEFT JOIN likePoint L
+				ON A.id = L.relId
+				AND L.relTypeCode = 'article'
 				WHERE A.id = #{id}
+				GROUP BY A.id
 			""")
 	public Article forPrintArticle(int id);
 	
