@@ -65,7 +65,7 @@
 	</script>
 
 	<section class="mt-8 text-lg">
-		<div class="container mx-auto px-3">
+		<div class="container mx-auto px-3 pb-8 border-bottom-line">
 			<div class="table-box-type">
 				<table class="table table-lg">
 					<tr>
@@ -106,7 +106,7 @@
 				</table>
 			</div>
 			
-			<div class="mt-3 text-sm">
+			<div class="mt-3">
 				<button class="btn btn-active btn-sm" onclick="history.back();">뒤로가기</button>
 				<c:if test="${rq.getLoginedMemberId() == article.memberId }">
 					<a class="btn btn-active btn-sm" href="modify?id=${article.id }">수정</a>
@@ -115,4 +115,35 @@
 			</div>
 		</div>
 	</section>
+	
+	<script>
+		const replyForm_onSubmit = function(form){
+			form.body.value = form.body.value.trim();
+			
+			if (form.body.value.length == 0) {
+				alert('비어있는 댓글은 작성할 수 없습니다');
+				form.body.focus();
+				return;
+			}
+			
+			form.submit();
+		}
+	</script>
+	
+	<section class="my-5 text-base">
+		<div class="container mx-auto px-3">
+			<div class="text-lg">댓글</div>
+			
+			<form action="../reply/doWrite" method="post" onsubmit="replyForm_onSubmit(this); return false;">
+				<input type="hidden" name="relTypeCode" value="article"/>
+				<input type="hidden" name="relId" value="${article.id }"/>
+				<div class="mt-4 reply-border p-4">
+					<div class="mb-2"><span>닉네임</span></div>
+					<textarea class="textarea textarea-bordered textarea-lg w-full" name="body" placeholder="댓글을 입력해보세요"></textarea>
+					<div class="flex justify-end"><button class="btn btn-active btn-sm">작성</button></div>
+				</div>
+			</form>
+		</div>
+	</section>
+	
 <%@ include file="../../common/foot.jsp" %>
