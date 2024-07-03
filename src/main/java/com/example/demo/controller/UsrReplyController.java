@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ReplyService;
 import com.example.demo.util.Util;
+import com.example.demo.vo.Reply;
+import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
 @Controller
@@ -38,5 +40,23 @@ public class UsrReplyController {
 		replyService.deleteReply(id);
 		
 		return Util.jsReplace(String.format("%d번 댓글을 삭제했습니다", id), String.format("../article/detail?id=%d", relId));
+	}
+	
+	@GetMapping("/usr/reply/getReply")
+	@ResponseBody
+	public ResultData<Reply> getReply(int id) {
+		
+		Reply reply = replyService.getReplyById(id);
+		
+		return ResultData.from("S-1", "댓글 정보 조회 성공", reply);
+	}
+	
+	@PostMapping("/usr/reply/doModify")
+	@ResponseBody
+	public String doModify(int id, int relId, String body) {
+		
+		replyService.modifyReply(id, body);
+		
+		return Util.jsReplace(String.format("%d번 댓글을 수정했습니다", id), String.format("../article/detail?id=%d", relId));
 	}
 }

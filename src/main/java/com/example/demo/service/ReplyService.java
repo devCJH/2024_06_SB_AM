@@ -31,4 +31,12 @@ public class ReplyService {
 	public void deleteReply(int id) {
 		this.replyDao.deleteReply(id);
 	}
+
+	public Reply getReplyById(int id) {
+		return this.replyDao.getReplyById(id);
+	}
+
+	public void modifyReply(int id, String body) {
+		this.replyDao.modifyReply(id, body);
+	}
 }
