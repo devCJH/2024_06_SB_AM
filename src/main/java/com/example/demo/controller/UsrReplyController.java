@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,5 +29,14 @@ public class UsrReplyController {
 		int id = replyService.getLastInsertId();
 
 		return Util.jsReplace(String.format("%d번 댓글을 작성했습니다", id), String.format("../article/detail?id=%d", relId));
+	}
+	
+	@GetMapping("/usr/reply/doDelete")
+	@ResponseBody
+	public String doDelete(int id, int relId) {
+		
+		replyService.deleteReply(id);
+		
+		return Util.jsReplace(String.format("%d번 댓글을 삭제했습니다", id), String.format("../article/detail?id=%d", relId));
 	}
 }
