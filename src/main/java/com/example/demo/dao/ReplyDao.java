@@ -1,8 +1,12 @@
 package com.example.demo.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import com.example.demo.vo.Reply;
 
 @Mapper
 public interface ReplyDao {
@@ -20,4 +24,14 @@ public interface ReplyDao {
 
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
+
+	@Select("""
+			SELECT R.*, M.nickname `writerName`
+				FROM reply R
+				INNER JOIN `member` M
+				ON R.memberId = M.id
+				WHERE R.relTypeCode = #{relTypeCode}
+				AND R.relId = #{relId}
+			""")
+	public List<Reply> getReplies(String relTypeCode, int relId);
 }

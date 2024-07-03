@@ -134,15 +134,25 @@
 		<div class="container mx-auto px-3">
 			<div class="text-lg">댓글</div>
 			
-			<form action="../reply/doWrite" method="post" onsubmit="replyForm_onSubmit(this); return false;">
-				<input type="hidden" name="relTypeCode" value="article"/>
-				<input type="hidden" name="relId" value="${article.id }"/>
-				<div class="mt-4 reply-border p-4">
-					<div class="mb-2"><span>닉네임</span></div>
-					<textarea class="textarea textarea-bordered textarea-lg w-full" name="body" placeholder="댓글을 입력해보세요"></textarea>
-					<div class="flex justify-end"><button class="btn btn-active btn-sm">작성</button></div>
+			<c:forEach var="reply" items="${replies }">
+				<div class="py-2 border-bottom-line pl-16">
+					<div class="font-semibold">${reply.writerName }</div>
+					<div class="text-lg my-1 ml-2">${reply.body }</div>
+					<div class="text-xs text-gray-400">${reply.updateDate }</div>
 				</div>
-			</form>
+			</c:forEach>
+			
+			<c:if test="${rq.getLoginedMemberId() != 0 }">
+				<form action="../reply/doWrite" method="post" onsubmit="replyForm_onSubmit(this); return false;">
+					<input type="hidden" name="relTypeCode" value="article"/>
+					<input type="hidden" name="relId" value="${article.id }"/>
+					<div class="mt-4 reply-border p-4">
+						<div class="mb-2"><span>닉네임</span></div>
+						<textarea class="textarea textarea-bordered textarea-lg w-full" name="body" placeholder="댓글을 입력해보세요"></textarea>
+						<div class="flex justify-end"><button class="btn btn-active btn-sm">작성</button></div>
+					</div>
+				</form>
+			</c:if>
 		</div>
 	</section>
 	
