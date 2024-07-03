@@ -8,6 +8,10 @@
 
 	<script>
 		$(document).ready(function(){
+			if (${rq.getLoginedMemberId() != 0 }) {
+				getNickname();
+			}
+			
 			getLikePoint();
 			
 			$('#likePointBtn').click(async function(){
@@ -62,6 +66,20 @@
 				}
 			})
 		}
+		
+		const getNickname = function(){
+			$.ajax({
+				url : '../member/getNickname',
+				type : 'GET',
+				dataType : 'text',
+				success : function(data) {
+					$('#replyNickname').html(data);
+				},
+				error : function(xhr, status, error) {
+					console.log(error);
+				}
+			})
+		}
 	</script>
 
 	<section class="mt-8 text-lg">
@@ -101,7 +119,7 @@
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td>${article.body }</td>
+						<td>${article.getForPrintBody() }</td>
 					</tr>
 				</table>
 			</div>
@@ -137,7 +155,7 @@
 			<c:forEach var="reply" items="${replies }">
 				<div class="py-2 border-bottom-line pl-16">
 					<div class="font-semibold">${reply.writerName }</div>
-					<div class="text-lg my-1 ml-2">${reply.body }</div>
+					<div class="text-lg my-1 ml-2">${reply.getForPrintBody() }</div>
 					<div class="text-xs text-gray-400">${reply.updateDate }</div>
 				</div>
 			</c:forEach>
@@ -147,7 +165,7 @@
 					<input type="hidden" name="relTypeCode" value="article"/>
 					<input type="hidden" name="relId" value="${article.id }"/>
 					<div class="mt-4 reply-border p-4">
-						<div class="mb-2"><span>닉네임</span></div>
+						<div class="mb-3"><span id="replyNickname" class="font-semibold"></span></div>
 						<textarea class="textarea textarea-bordered textarea-lg w-full" name="body" placeholder="댓글을 입력해보세요"></textarea>
 						<div class="flex justify-end"><button class="btn btn-active btn-sm">작성</button></div>
 					</div>
