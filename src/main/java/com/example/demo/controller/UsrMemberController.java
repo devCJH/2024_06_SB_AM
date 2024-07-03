@@ -97,6 +97,10 @@ public class UsrMemberController {
 		
 		Member member = memberService.getMemberById(rq.getLoginedMemberId());
 		
+		if (member == null) {
+			return "로그인 정보 없음";
+		}
+		
 		return member.getNickname();
 	}
 }

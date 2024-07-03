@@ -8,9 +8,7 @@
 
 	<script>
 		$(document).ready(function(){
-			if (${rq.getLoginedMemberId() != 0 }) {
-				getNickname();
-			}
+			getNickname();
 			
 			getLikePoint();
 			
