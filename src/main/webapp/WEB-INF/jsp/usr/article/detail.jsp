@@ -182,7 +182,7 @@
 				<button class="btn btn-active btn-sm" onclick="history.back();">뒤로가기</button>
 				<c:if test="${rq.getLoginedMemberId() == article.memberId }">
 					<a class="btn btn-active btn-sm" href="modify?id=${article.id }">수정</a>
-					<a class="btn btn-active btn-sm" href="doDelete?id=${article.id }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
+					<a class="btn btn-active btn-sm" href="doDelete?id=${article.id }&boardId=${article.boardId }" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;">삭제</a>
 				</c:if>
 			</div>
 		</div>

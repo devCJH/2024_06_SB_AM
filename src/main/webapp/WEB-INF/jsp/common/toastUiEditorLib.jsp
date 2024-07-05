@@ -14,10 +14,13 @@
 	$(function(){
 	  $('.toast-ui-editor').each(function(index, item) {
 	    const items = $(item);
+	    const initialValueEl = items.find(' > script');
+	    const initialValue = initialValueEl.length == 0 ? '' : initialValueEl.html().trim();
 	
 	    const editor = new Editor({
 	      el: item,
 	      height: '600px',
+	      initialValue: initialValue,
 	      initialEditType: 'markdown',
 	      previewStyle: 'tab',
 	      plugins: [colorSyntax]
