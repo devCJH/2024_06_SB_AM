@@ -6,9 +6,13 @@
     src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.ttf) format("truetype");
 }
 
-html > body {
+html > body, .ProseMirror > div, .toastui-editor-contents > div {
 	font-family: 'NanumSquareNeo';
 	text-underline-position: under;
+}
+
+.ProseMirror > div, .toastui-editor-contents > div {
+	font-size: 1.25rem;
 }
 
 .border-bottom-line {
