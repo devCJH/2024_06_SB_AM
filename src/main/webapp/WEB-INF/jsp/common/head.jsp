@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>${pageTitle }</title>
+<link rel="shortcut icon" href="/resource/images/favicon.ico" />
 <!-- 데이지UI, 테일윈드 -->
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.8/dist/full.min.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.tailwindcss.com"></script>
