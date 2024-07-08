@@ -23,40 +23,31 @@ public class UsrMemberController {
 		this.rq = rq;
 	}
 	
-	@GetMapping("/usr/member/doJoin")
+	@GetMapping("/usr/member/join")
+	public String join() {
+		return "usr/member/join";
+	}
+	
+	@GetMapping("/usr/member/loginIdDupChk")
 	@ResponseBody
-	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
-		
-		if (Util.isEmpty(loginId)) {
-			return ResultData.from("F-1", "아이디를 입력해주세요");
-		}
-		if (Util.isEmpty(loginPw)) {
-			return ResultData.from("F-2", "비밀번호를 입력해주세요");
-		}
-		if (Util.isEmpty(name)) {
-			return ResultData.from("F-3", "이름을 입력해주세요");
-		}
-		if (Util.isEmpty(nickname)) {
-			return ResultData.from("F-4", "닉네임을 입력해주세요");
-		}
-		if (Util.isEmpty(cellphoneNum)) {
-			return ResultData.from("F-5", "전화번호를 입력해주세요");
-		}
-		if (Util.isEmpty(email)) {
-			return ResultData.from("F-6", "이메일을 입력해주세요");
-		}
+	public ResultData loginIdDupChk(String loginId) {
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if (member != null) {
-			return ResultData.from("F-7", String.format("%s은(는) 이미 사용중인 아이디입니다", loginId));
+			return ResultData.from("F-1", String.format("[ %s ] 은(는) 이미 사용중인 아이디입니다", loginId));
 		}
+		
+		return ResultData.from("S-1", String.format("[ %s ] 은(는) 사용가능한 아이디입니다", loginId));
+	}
+	
+	@PostMapping("/usr/member/doJoin")
+	@ResponseBody
+	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
 		
 		memberService.joinMember(loginId, loginPw, name, nickname, cellphoneNum, email);
 		
-		int id = memberService.getLastInsertId();
-		
-		return ResultData.from("S-1", String.format("%s님이 가입되었습니다", nickname), memberService.getMemberById(id));
+		return Util.jsReplace(String.format("%s님이 가입되었습니다", nickname), "login");
 	}
 	
 	@GetMapping("/usr/member/login")
