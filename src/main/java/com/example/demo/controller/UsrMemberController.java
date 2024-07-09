@@ -45,7 +45,7 @@ public class UsrMemberController {
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
 		
-		memberService.joinMember(loginId, loginPw, name, nickname, cellphoneNum, email);
+		memberService.joinMember(loginId, Util.getSHA256Hash(loginPw), name, nickname, cellphoneNum, email);
 		
 		return Util.jsReplace(String.format("%s님이 가입되었습니다", nickname), "login");
 	}
@@ -65,7 +65,7 @@ public class UsrMemberController {
 			return Util.jsHistoryBack(String.format("%s은(는) 존재하지 않는 아이디입니다", loginId));
 		}
 		
-		if (member.getLoginPw().equals(loginPw) == false) {
+		if (member.getLoginPw().equals(Util.getSHA256Hash(loginPw)) == false) {
 			return Util.jsHistoryBack("비밀번호가 일치하지 않습니다");
 		}
 		
@@ -138,6 +138,12 @@ public class UsrMemberController {
 		return ResultData.from("S-1", "회원 조회 성공", member);
 	}
 	
+	@GetMapping("/usr/member/getSHA256Pw")
+	@ResponseBody
+	public String getSHA256Pw(String pwValue) {
+		return Util.getSHA256Hash(pwValue);
+	}
+	
 	@PostMapping("/usr/member/doModify")
 	@ResponseBody
 	public String doModify(String name, String nickname, String cellphoneNum, String email) {
@@ -153,7 +159,7 @@ public class UsrMemberController {
 	@ResponseBody
 	public String doPasswordModify(String loginPw) {
 		
-		memberService.doPasswordModify(rq.getLoginedMemberId(), loginPw);
+		memberService.doPasswordModify(rq.getLoginedMemberId(), Util.getSHA256Hash(loginPw));
 		
 		return Util.jsReplace("비밀번호가 변경되었습니다", "myPage");
 	}
