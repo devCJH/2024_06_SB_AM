@@ -163,4 +163,53 @@ public class UsrMemberController {
 		
 		return Util.jsReplace("비밀번호가 변경되었습니다", "myPage");
 	}
+	
+	@GetMapping("/usr/member/findLoginId")
+	public String findLoginId() {
+		return "usr/member/findLoginId";
+	}
+	
+	@PostMapping("/usr/member/doFindLoginId")
+	@ResponseBody
+	public String doFindLoginId(String name, String cellphoneNum, String email) {
+		
+		Member member = memberService.getMemberByNameAndCellAndEmail(name, cellphoneNum, email);
+		
+		if (member == null) {
+			return Util.jsHistoryBack("입력하신 정보와 일치하는 회원이 없습니다");
+		}
+		
+		return Util.jsReplace(String.format("회원님의 아이디는 [ %s ] 입니다", member.getLoginId()), "login");
+	}
+	
+	@GetMapping("/usr/member/findLoginPw")
+	public String findLoginPw() {
+		return "usr/member/findLoginPw";
+	}
+	
+	@PostMapping("/usr/member/doFindLoginPw")
+	@ResponseBody
+	public String doFindLoginPw(String loginId, String email) {
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if (member == null) {
+			return Util.jsHistoryBack("입력하신 아이디와 일치하는 회원이 없습니다");
+		}
+		
+		if (member.getEmail().equals(email) == false) {
+			return Util.jsHistoryBack("이메일이 일치하지 않습니다");
+		}
+		
+		String tempPassword = Util.createTempPassword();
+		
+		try {
+			memberService.sendPasswordRecoveryEmail(member, tempPassword);
+		} catch (Exception e) {
+			return Util.jsReplace("임시 패스워드 발송에 실패했습니다", "/");
+		}
+		memberService.doPasswordModify(member.getId(), Util.getSHA256Hash(tempPassword));
+		
+		return Util.jsReplace("회원님의 이메일주소로 임시 패스워드가 발송되었습니다", "login");
+	}
 }
