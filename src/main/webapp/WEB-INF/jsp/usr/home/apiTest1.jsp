@@ -8,7 +8,7 @@
 
 <script>
 	async function getData() {
-		const API_KEY = 'sd2%2Fw1FPMP7dCiLT1r8GNJatfwBCKhZfFVQAA3lNV55hr4o2tNP9B0NpNBn7iAGvAN8QwKTBfli73H%2Fdq7xZBw%3D%3D';
+		const API_KEY = '${apiTest1Key }';
 		const url = 'http://apis.data.go.kr/1360000/WthrWrnInfoService/getWthrWrnList?serviceKey=' + API_KEY + '&numOfRows=10&pageNo=1&dataType=json';
 		
 		const response = await fetch(url);

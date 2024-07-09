@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="FIND LOGINID" />
+<c:set var="pageTitle" value="FIND LOGINPW" />
 
 <%@ include file="../../common/head.jsp" %>
 
