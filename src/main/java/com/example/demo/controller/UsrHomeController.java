@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -92,5 +93,18 @@ public class UsrHomeController {
 		FileVO fileVo = fileService.getFileById(id);
 		
 		return new UrlResource("file:" + fileVo.getSavedPath());
+	}
+	
+	@GetMapping("/usr/home/checkboxBasic")
+	public String checkboxBasic(Model model) {
+		return "usr/home/checkboxBasic";
+	}
+	
+	@PostMapping("/usr/home/checkboxSubmit")
+	public String checkboxSubmit(Model model, @RequestParam(name = "ids", required = false) List<String> ids) {
+		
+		model.addAttribute("ids", ids);
+		
+		return "usr/home/checkboxSubmit";
 	}
 }

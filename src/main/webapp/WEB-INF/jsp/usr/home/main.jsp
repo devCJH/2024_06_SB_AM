@@ -36,6 +36,9 @@
 				<a class="btn btn-active btn-sm" href="/usr/home/view">파일보러가기</a>
 			</div>
 			
+			<div class="mt-8">
+				<a class="btn btn-active btn-sm" href="/usr/home/checkboxBasic">체크박스 기초</a>
+			</div>
 		</div>
 	</section>
 
