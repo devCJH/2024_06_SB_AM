@@ -24,6 +24,18 @@
 				<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius molestiae fugiat sunt ratione quo iure temporibus asperiores praesentium suscipit ab nulla et culpa quae atque eaque perferendis sint officiis voluptas.</div>				
 				<button class="close-btn btn btn-active">CLOSE</button>
 			</div>
+			
+			<div class="mt-8">
+				<form action="upload" method="post" enctype="multipart/form-data">
+					<input type="file" name="file" />
+					<button class="btn btn-active btn-sm">업로드</button>
+				</form>
+			</div>
+			
+			<div class="mt-8">
+				<a class="btn btn-active btn-sm" href="/usr/home/view">파일보러가기</a>
+			</div>
+			
 		</div>
 	</section>
 

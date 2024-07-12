@@ -21,8 +21,14 @@ spring:
           auth: true
           starttls:
             enable: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
 server:
   port: 8081
 custom:
   apiTest1:
     key: sd2%2Fw1FPMP7dCiLT1r8GNJatfwBCKhZfFVQAA3lNV55hr4o2tNP9B0NpNBn7iAGvAN8QwKTBfli73H%2Fdq7xZBw%3D%3D
+file:
+  dir: D:/cjh/upload
